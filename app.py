@@ -238,4 +238,258 @@ pla_pool = 6800000.0
 q_pool = 18200000.0
 qp_pool = 11500000.0
 
-parsed =
+parsed = []
+for h in raw_runners:
+    no, name, draw, wt, j, t, style, b_win, b_pla, o_win, form_6, bw, dist_stat, expert_com, drop_rate, is_scratched = h
+    
+    if is_scratched:
+        parsed.append({
+            "no": no, "name": name, "draw": draw, "wt": wt, "j": j, "t": t, "style": style,
+            "c_win": 0.0, "o_win": 0.0, "on_drop": 0.0, "drop_pct": 0.0,
+            "c_pla": 0.0, "o_pla": 0.0, "stake": 0, "share": 0.0,
+            "e_sp": 0, "l_sp": 0, "tot": -999, "ai_score": -999,
+            "form_6": form_6, "bw": bw, "dist_stat": dist_stat, "expert_com": expert_com,
+            "sig": "🚫 退出", "cls": "b-red", "is_scratched": True
+        })
+        continue
+        
+    c_win = b_win
+    c_pla = b_pla
+    o_pla = round(c_pla * 1.15, 1) if c_pla > 0 else 0.0
+    on_drop = round(((o_win - c_win) / o_win) * 100.0, 1) if o_win > 0 else 0.0
+    drop_pct = drop_rate
+    
+    # 速度基本盤
+    if style == "放頭": e_sp, l_sp = (96, 78)
+    elif style == "均速": e_sp, l_sp = (91, 86)
+    elif style == "跟前": e_sp, l_sp = (84, 90)
+    elif style == "後上": e_sp, l_sp = (75, 93)
+    else: e_sp, l_sp = (68, 97)
+        
+    dr_sc = 95 if draw <= 3 else (88 if draw <= 7 else 72)
+    jt_sc = 96 if "潘頓" in j or "何澤堯" in j else (90 if "艾道拿" in j or "田泰安" in j else 82)
+    base_sc = e_sp * 0.25 + l_sp * 0.25 + (dr_sc + st.session_state["ai_learning_bias"]["draw_bias"]) * 0.25 + jt_sc * 0.25
+    
+    # AI 深度多因子評分 (近績真實戰力 + 東方評語語意審計 + 資金落飛)
+    win_c, sec_c, trd_c, unp_c = dist_stat
+    total_runs = win_c + sec_c + trd_c + unp_c
+    top3_rate = (win_c + sec_c + trd_c) / max(1, total_runs)
+    
+    # 1. 近績懲罰/獎勵 (跑過而從未上名者，嚴厲扣分，杜絕如莊家班之誤判)
+    form_bonus = 0
+    if total_runs >= 2 and (win_c + sec_c + trd_c) == 0:
+        form_bonus -= 35  # 完全未上過名，扣重分
+    elif top3_rate >= 0.5:
+        form_bonus += 20  # 上名率過半，大幅加分
+    elif win_c >= 1:
+        form_bonus += 10
+        
+    # 2. 東方日報名家評語情緒審計
+    expert_adj = 0
+    neg_kw = ["未足", "難言把握", "暫宜觀望", "退避", "調教期", "吃虧", "走勢略重"]
+    pos_kw = ["重心", "主力", "爭勝", "三甲", "首選", "凌厲", "有力一拼", "保證", "火氣極盛"]
+    for kw in neg_kw:
+        if kw in expert_com:
+            expert_adj -= 20
+            break
+    for kw in pos_kw:
+        if kw in expert_com:
+            expert_adj += 18
+            break
+            
+    # 3. 聰明錢資金加乘
+    money_bonus = 0
+    if drop_pct >= 28: money_bonus += 22
+    elif drop_pct >= 18: money_bonus += 14
+    elif drop_pct >= 10: money_bonus += 8
+    elif drop_pct < 0: money_bonus -= 12
+        
+    ai_score = round(base_sc + form_bonus + expert_adj + money_bonus)
+    tot = round(base_sc) # 基礎速度體能分
+    
+    stake = int((win_pool * 0.825 / max(0.1, c_win)) * 0.12)
+    share = round((stake / (win_pool * 0.825)) * 100.0, 1)
+    
+    if "2 分鐘" in time_phase:
+        if drop_pct >= 28.0: sig, cls = ("🔴 啡燈暴跌", "b-brown")
+        elif drop_pct >= 18.0: sig, cls = ("🟢 綠燈急落", "b-green")
+        elif drop_pct >= 10.0: sig, cls = ("📈 資金追捧", "b-blue")
+        elif drop_pct < 0: sig, cls = ("⚠️ 回飛走資", "b-red")
+        else: sig, cls = ("⚪ 平走醞釀", "b-gray")
+    elif "5 分鐘" in time_phase:
+        if drop_pct >= 20.0: sig, cls = ("🟢 綠燈急落", "b-green")
+        elif drop_pct >= 10.0: sig, cls = ("📈 資金吸納", "b-blue")
+        else: sig, cls = ("⚪ 平走", "b-gray")
+    else:
+        if on_drop >= 20.0: sig, cls = ("🌙 隔夜建倉", "b-blue")
+        else: sig, cls = ("⚪ 早盤平穩", "b-gray")
+        
+    parsed.append({
+        "no": no, "name": name, "draw": draw, "wt": wt, "j": j, "t": t, "style": style,
+        "c_win": c_win, "o_win": o_win, "on_drop": on_drop, "drop_pct": drop_pct,
+        "c_pla": c_pla, "o_pla": o_pla, "stake": stake, "share": share,
+        "e_sp": e_sp, "l_sp": l_sp, "tot": tot, "ai_score": ai_score,
+        "form_6": form_6, "bw": bw, "dist_stat": dist_stat, "expert_com": expert_com, "sig": sig, "cls": cls,
+        "is_scratched": False
+    })
+
+df = pd.DataFrame(parsed)
+
+# 連贏 (Q) 及 位置Q (QP) 獨立計算 (排除退出馬匹)
+q_list = []
+n = len(df)
+for i in range(n):
+    for k in range(i + 1, n):
+        r1 = df.iloc[i]
+        r2 = df.iloc[k]
+        
+        if r1["is_scratched"] or r2["is_scratched"]:
+            q_list.append({
+                "pair": f"{r1['no']}-{r2['no']}",
+                "h1": r1["no"], "h2": r2["no"],
+                "name1": r1["name"], "name2": r2["name"],
+                "c_q": 0.0, "o_q": 0.0, "q_drop": 0.0, "q_stk": 0,
+                "c_qp": 0.0, "o_qp": 0.0, "qp_drop": 0.0, "qp_stk": 0,
+                "q_color": "cell-scratched", "is_scratched": True
+            })
+            continue
+            
+        p1 = 0.825 / max(0.1, r1["c_win"])
+        p2 = 0.825 / max(0.1, r2["c_win"])
+        pq = (p1 * p2 / max(0.01, 1 - p2)) + (p2 * p1 / max(0.01, 1 - p1))
+        
+        c_q = round(max(2.2, 0.825 / max(0.001, pq)), 1)
+        c_qp = round(max(1.3, 0.825 / max(0.001, pq * 2.6)), 1)
+        
+        op1 = 0.825 / max(0.1, r1["o_win"])
+        op2 = 0.825 / max(0.1, r2["o_win"])
+        opq = (op1 * op2 / max(0.01, 1 - op2)) + (op2 * op1 / max(0.01, 1 - op1))
+        
+        o_q = round(max(2.4, 0.825 / max(0.001, opq)), 1)
+        o_qp = round(max(1.4, 0.825 / max(0.001, opq * 2.6)), 1)
+        
+        q_drop = round(((o_q - c_q) / o_q) * 100.0, 1) if o_q > 0 else 0.0
+        qp_drop = round(((o_qp - c_qp) / o_qp) * 100.0, 1) if o_qp > 0 else 0.0
+        
+        q_stk = int((q_pool * 0.825 / c_q) * 0.16)
+        qp_stk = int((qp_pool * 0.825 / c_qp) * 0.14)
+        
+        if q_drop >= 28.0: q_color_cls = "cell-brown"
+        elif q_drop >= 18.0: q_color_cls = "cell-green"
+        elif c_q <= 12.0: q_color_cls = "cell-hot"
+        else: q_color_cls = "cell-norm"
+            
+        q_list.append({
+            "pair": f"{r1['no']}-{r2['no']}",
+            "h1": r1["no"], "h2": r2["no"],
+            "name1": r1["name"], "name2": r2["name"],
+            "c_q": c_q, "o_q": o_q, "q_drop": q_drop, "q_stk": q_stk,
+            "c_qp": c_qp, "o_qp": o_qp, "qp_drop": qp_drop, "qp_stk": qp_stk,
+            "q_color": q_color_cls, "is_scratched": False
+        })
+
+df_q = pd.DataFrame(q_list)
+active_q = df_q[~df_q["is_scratched"]].sort_values(by="c_q")
+top_q = active_q.iloc[0] if len(active_q) > 0 else {"pair": "-", "c_q": 0, "c_qp": 0}
+active_df = df[~df["is_scratched"]]
+fav_h = active_df.sort_values(by="c_win").iloc[0] if len(active_df) > 0 else df.iloc[0]
+
+# 統計出賽馬匹跑法數量 (排除退出馬)
+leads_cnt = len(active_df[active_df["style"] == "放頭"])
+paces_cnt = len(active_df[active_df["style"] == "均速"])
+folls_cnt = len(active_df[active_df["style"] == "跟前"])
+backs_cnt = len(active_df[active_df["style"] == "後上"])
+vback_cnt = len(active_df[active_df["style"] == "大後上"])
+scratched_cnt = len(df[df["is_scratched"]])
+
+if leads_cnt >= 3:
+    pace_forecast = "快步速 (多馬放頭互爭，後上/大後上極度有利)"
+elif leads_cnt <= 1 and paces_cnt <= 2:
+    pace_forecast = "慢步速 (放頭/均速馬掌控步速，貼欄前領直路直放到底)"
+else:
+    pace_forecast = "標準均速 (均速及跟前型馬匹形勢最佳)"
+
+scratched_info = f" ｜ ⚠️ <b>{scratched_cnt} 匹已退出</b>" if scratched_cnt > 0 else ""
+st.markdown(f"""
+<div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:6px; padding:6px 12px; margin-bottom:8px; font-size:12px;">
+    <b>🚦 【第 {race_no} 場 {r_title}】出賽跑法分佈：</b>
+    放頭 <b>{leads_cnt}</b> 匹 ｜ 均速 <b>{paces_cnt}</b> 匹 ｜ 跟前 <b>{folls_cnt}</b> 匹 ｜ 後上 <b>{backs_cnt}</b> 匹 ｜ 大後上 <b>{vback_cnt}</b> 匹{scratched_info}
+    <span style="color:#15803D; margin-left:8px; font-weight:bold;">➤ 步速推演：{pace_forecast}</span>
+</div>
+""", unsafe_allow_html=True)
+
+# 頂部彩池指標
+m1, m2, m3, m4 = st.columns(4)
+with m1:
+    st.markdown(f'<div class="stat-card"><b>HK$ {int(win_pool):,}</b><br><span style="color:#64748B; font-size:11px;">獨贏 (WIN) 彩池</span></div>', unsafe_allow_html=True)
+with m2:
+    st.markdown(f'<div class="stat-card"><b>HK$ {int(pla_pool):,}</b><br><span style="color:#64748B; font-size:11px;">位置 (PLA) 彩池</span></div>', unsafe_allow_html=True)
+with m3:
+    st.markdown(f'<div class="stat-card"><b style="color:#B45309;">HK$ {int(q_pool):,}</b><br><span style="color:#B45309; font-size:11px; font-weight:bold;">連贏 (Q) 彩池 · 熱Q: {top_q["pair"]} ({top_q["c_q"]}倍)</span></div>', unsafe_allow_html=True)
+with m4:
+    st.markdown(f'<div class="stat-card"><b style="color:#1D4ED8;">HK$ {int(qp_pool):,}</b><br><span style="color:#1D4ED8; font-size:11px; font-weight:bold;">位置Q (QP) 彩池 · 熱QP: {top_q["pair"]} ({top_q["c_qp"]}倍)</span></div>', unsafe_allow_html=True)
+
+# 輔助函數：渲染圓圈賽績
+def render_dist_circles(stat):
+    w, s, t, u = stat
+    return f"""<div class="dist-circles">
+    <span class="c-circle c-gold" title="冠軍: {w}次">{w}</span>
+    <span class="c-circle c-silver" title="亞軍: {s}次">{s}</span>
+    <span class="c-circle c-bronze" title="季軍: {t}次">{t}</span>
+    <span class="c-circle c-gray" title="負/未入三甲: {u}次">{u}</span>
+    </div>"""
+
+# ----------------- 視圖 1: 賠率版 -----------------
+if "專業賠率版" in chosen_view:
+    st.markdown(f"##### 🏇 第 {race_no} 場《{r_title}》獨贏及位置實時走勢 (同程數據：🟡冠 ⚪亞 🟤季 ⚫負)")
+    
+    tbl1 = """<table class="compact-table"><thead><tr>
+    <th>馬號</th><th>馬名</th>
+    <th style="background:#EFF6FF; color:#1D4ED8;">檔位</th>
+    <th style="background:#EFF6FF; color:#1D4ED8;">跑法</th>
+    <th style="background:#FEF9C3; color:#854D0E;">同程數據 (冠-亞-季-負)</th>
+    <th>負磅</th><th>騎師</th><th>練馬師</th>
+    <th>隔夜WIN</th><th style="background:#FEF3C7;">臨場WIN</th>
+    <th>🌙隔夜落飛</th><th>臨場跌幅</th>
+    <th>隔夜PLA</th><th style="background:#FEF3C7;">臨場PLA</th>
+    <th>🔥最熱Q配搭</th>
+    <th>新增注碼</th><th>熱錢佔比</th><th>訊號</th>
+    </tr></thead><tbody>"""
+    
+    for _, r in df.sort_values(by=["is_scratched", "stake"], ascending=[True, False]).iterrows():
+        if r["is_scratched"]:
+            tbl1 += f"""<tr class="scratched-row">
+            <td><span class="circle-no" style="background:#94A3B8;">{r['no']}</span></td>
+            <td><del>{r['name']}</del><span class="scratched-tag">退出</span></td>
+            <td>-</td><td>-</td>
+            <td>{render_dist_circles(r['dist_stat'])}</td>
+            <td>{r['wt']}磅</td><td>{r['j']}</td><td>{r['t']}</td>
+            <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
+            <td>-</td><td>$0</td><td>0.0%</td>
+            <td><span class="badge b-red">🚫 退出</span></td>
+            </tr>"""
+            continue
+            
+        c_cls = "circle-no fav-no" if r["no"] == fav_h["no"] else "circle-no"
+        q_matches = active_q[(active_q["h1"] == r["no"]) | (active_q["h2"] == r["no"])]
+        if len(q_matches) > 0:
+            q_pair_match = q_matches.iloc[0]
+            oppo = q_pair_match["h2"] if q_pair_match["h1"] == r["no"] else q_pair_match["h1"]
+            top_q_txt = f"{oppo}號 ({q_pair_match['c_q']}倍)"
+        else:
+            top_q_txt = "-"
+            
+        on_txt = f"{r['on_drop']:+.1f}%" if r["on_drop"] != 0 else "平"
+        if r["on_drop"] >= 20.0: on_txt += " 🌙"
+        
+        tbl1 += f"""<tr>
+        <td><span class="{c_cls}">{r['no']}</span></td>
+        <td><b>{r['name']}</b></td>
+        <td style="font-weight:bold; color:#1D4ED8; background:#EFF6FF;">{r['draw']}檔</td>
+        <td style="font-weight:bold; background:#EFF6FF;">{r['style']}</td>
+        <td style="background:#FEFCE8;">{render_dist_circles(r['dist_stat'])}</td>
+        <td>{r['wt']}磅</td><td>{r['j']}</td><td>{r['t']}</td>
+        <td>{r['o_win']}</td>
+        <td style="background:#FFFBEB; font-weight:bold; color:#DC2626;">{r['c_win']}</td>
+        <td style="font-weight:bold; color:#15803D;">{on_txt}</td>
+        <td style="font-weight:bold;
