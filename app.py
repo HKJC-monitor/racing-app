@@ -369,12 +369,249 @@ def get_signal_by_phase(r, phase_str):
 
 df[["sig_t", "sig_c"]] = df.apply(lambda r: pd.Series(get_signal_by_phase(r, time_phase)), axis=1)
 
-# 計算全場 連贏 (QIN / Q) 與 位置Q (QPL / QP) 獨立注碼與落飛 (100% 分開計算)
+# 計算全場 連贏 (QIN / Q) 與 位置Q (QPL / QP) 獨立注碼與落飛 (100% 分開計算，單行防錯)
 def calc_q_and_qp(w1, w2, o_w1, o_w2):
     p1 = 0.825 / w1
     p2 = 0.825 / w2
-    p_q = (p1 * p2 / max(0.01, 1 - p2)) + (p2 * p1 / max(0.01, 1 - p1))
-    c_q = round(max(2.2, 0.825 / max(0.001, p_q)), 1)
+    d1 = max(0.01, 1.0 - p2)
+    d2 = max(0.01, 1.0 - p1)
+    p_q = (p1 * p2 / d1) + (p2 * p1 / d2)
     
+    # Q 臨場賠率
+    q_denom = max(0.001, p_q)
+    c_q_raw = 0.825 / q_denom
+    c_q = round(max(2.2, c_q_raw), 1)
+    
+    # QP 臨場賠率
     p_qp = p_q * 2.6
-    c_qp = round(max(1.3, 0.825 / max(
+    qp_denom = max(0.001, p_qp)
+    c_qp_raw = 0.825 / qp_denom
+    c_qp = round(max(1.3, c_qp_raw), 1)
+    
+    # 隔夜盤計算
+    op1 = 0.825 / o_w1
+    op2 = 0.825 / o_w2
+    od1 = max(0.01, 1.0 - op2)
+    od2 = max(0.01, 1.0 - op1)
+    op_q = (op1 * op2 / od1) + (op2 * op1 / od2)
+    
+    oq_denom = max(0.001, op_q)
+    o_q_raw = 0.825 / oq_denom
+    o_q = round(max(2.4, o_q_raw), 1)
+    
+    op_qp = op_q * 2.6
+    oqp_denom = max(0.001, op_qp)
+    o_qp_raw = 0.825 / oqp_denom
+    o_qp = round(max(1.4, o_qp_raw), 1)
+    
+    # 跌幅計算
+    q_drop = round(((o_q - c_q) / o_q) * 100.0, 1)
+    qp_drop = round(((o_qp - c_qp) / o_qp) * 100.0, 1)
+    
+    # Q 和 QP 獨立落飛金額 (100% 分開)
+    q_stake = int((q_pool * 0.825 / c_q) * 0.16)
+    qp_stake = int((qp_pool * 0.825 / c_qp) * 0.14)
+    
+    return c_q, o_q, q_drop, q_stake, c_qp, o_qp, qp_drop, qp_stake
+
+q_pairs = []
+n_run = len(df)
+for i in range(n_run):
+    for j in range(i+1, n_run):
+        r1 = df.iloc[i]
+        r2 = df.iloc[j]
+        c_q, o_q, q_drop, q_stake, c_qp, o_qp, qp_drop, qp_stake = calc_q_and_qp(r1["c_win"], r2["c_win"], r1["o_win"], r2["o_win"])
+        
+        q_pairs.append({
+            "pair": f"{r1['no']} - {r2['no']}",
+            "h1_no": r1["no"], "h2_no": r2["no"],
+            "h1_name": r1["name"], "h2_name": r2["name"],
+            "c_q": c_q, "o_q": o_q, "q_drop": q_drop, "q_stake": q_stake,
+            "c_qp": c_qp, "o_qp": o_qp, "qp_drop": qp_drop, "qp_stake": qp_stake
+        })
+
+df_q = pd.DataFrame(q_pairs).sort_values(by="c_q", ascending=True)
+
+# 步速與焦點提示
+cp, ca = st.columns(2)
+with cp:
+    st.markdown(f'<div class="pace-box"><b>🚦 【第 {race_no} 場 {r_name} {r_dist}】步速推演：{pace_txt}</b><br><span style="color:#166534;">領放 {len(leads)} 匹 · 前領 {len(fwds)} 匹 · 居中 {len(mids)} 匹 · 後上 {len(backs)} 匹 ｜ 獎金：${prizemoney:,}</span></div>', unsafe_allow_html=True)
+with ca:
+    top_q = df_q.iloc[0]
+    hots = df[df["sig_t"].str.contains("啡燈|綠燈|建倉")]
+    ht = " · ".join([f"<b>{r['no']}號 {r['name']}</b> ({r['c_win']}倍)" for _, r in hots.iterrows()]) if len(hots) > 0 else "暫無急落異常"
+    st.markdown(f'<div class="alert-box"><b>🚨 【第 {race_no} 場】MoneyFlow 操盤焦點 ({time_phase.split(" ")[1]})</b><br><span style="color:#7F1D1D;">獨贏焦點：{ht} ｜ <b>最熱Q組合：{top_q["pair"]} ({top_q["h1_name"]}+{top_q["h2_name"]} Q:{top_q["c_q"]}倍 / QP:{top_q["c_qp"]}倍)</b></span></div>', unsafe_allow_html=True)
+
+# 4 個指標卡：按用戶要求，Q 和 QP 總彩池與落飛金額 100% 獨立展示，絕不混在一起！
+m1, m2, m3, m4 = st.columns(4)
+fav = df.sort_values(by="c_win").iloc[0]
+tot_q_stake = df_q["q_stake"].head(10).sum()
+tot_qp_stake = df_q["qp_stake"].head(10).sum()
+
+with m1:
+    st.markdown(f'<div class="stat-card"><div style="font-size:15px; font-weight:800; color:#0F172A;">HK$ {int(win_pool):,}</div><div style="font-size:11px; color:#64748B;">即時獨贏 (WIN) 彩池</div></div>', unsafe_allow_html=True)
+with m2:
+    st.markdown(f'<div class="stat-card"><div style="font-size:15px; font-weight:800; color:#0F172A;">HK$ {int(pla_pool):,}</div><div style="font-size:11px; color:#64748B;">即時位置 (PLA) 彩池</div></div>', unsafe_allow_html=True)
+with m3:
+    st.markdown(f'<div class="stat-card"><div style="font-size:15px; font-weight:800; color:#B45309;">HK$ {int(q_pool):,}</div><div style="font-size:11px; color:#B45309; font-weight:700;">連贏 (Q) 彩池 · 前10Q落飛: ${int(tot_q_stake):,}</div></div>', unsafe_allow_html=True)
+with m4:
+    st.markdown(f'<div class="stat-card"><div style="font-size:15px; font-weight:800; color:#1D4ED8;">HK$ {int(qp_pool):,}</div><div style="font-size:11px; color:#1D4ED8; font-weight:700;">位置Q (QP) 彩池 · 前10QP落飛: ${int(tot_qp_stake):,}</div></div>', unsafe_allow_html=True)
+
+# ==============================================================================
+# 條件渲染三大核心視圖 (session_state 鎖定，絕不跳頁)
+# ==============================================================================
+
+# ----------------- 視圖 1: MoneyFlow 專業賠率版 (包含 獨贏/位置 + 連贏/位置Q) -----------------
+if "專業賠率版" in chosen_view_title:
+    st.markdown('<div class="section-title">🏇 獨贏 (WIN) 及 位置 (PLA) 實時資金流走勢盤</div>', unsafe_allow_html=True)
+    odds_s = df.sort_values(by="delta_s", ascending=False)
+    
+    h_odds = """<table class="compact-table"><thead><tr>
+    <th>馬號</th><th>馬名 (連馬會)</th><th>檔位</th><th>負磅</th><th>騎師</th><th>練馬師</th><th>跑法</th>
+    <th>隔夜獨贏</th><th style="background:#FEF3C7; color:#B45309;">臨場獨贏</th>
+    <th style="background:#EFF6FF; color:#1D4ED8;">🌙 隔夜落飛</th>
+    <th>臨場跌幅</th>
+    <th>隔夜位置</th><th style="background:#FEF3C7; color:#B45309;">臨場位置</th><th>位置跌幅</th>
+    <th style="background:#F0FDF4; color:#15803D;">🔥 最熱Q搭檔</th>
+    <th>新增注碼</th><th>彩池佔比</th><th>熱錢倍數</th>
+    <th>操盤走勢訊號 (時段連動)</th>
+    </tr></thead><tbody>"""
+    
+    for _, r in odds_s.iterrows():
+        c_cls = "num-circle num-fav" if (r["no"] == fav["no"]) else "num-circle"
+        d_col = "#15803D" if r["drop_pct_5m"] >= 15.0 else ("#DC2626" if r["drop_pct_5m"] < 0 else "#334155")
+        on_col = "#15803D" if r["overnight_drop"] >= 15.0 else ("#DC2626" if r["overnight_drop"] < 0 else "#64748B")
+        pla_drop = round(((r["o_pla"] - r["c_pla"]) / r["o_pla"] * 100), 1)
+        pla_d_col = "#15803D" if pla_drop >= 10.0 else ("#DC2626" if pla_drop < 0 else "#64748B")
+        b_cls = "pool-bar-fill-hot" if r["p_share"] >= 18.0 else "pool-bar-fill"
+        h_url = f"https://racing.hkjc.com/racing/information/Chinese/Racing/RaceCard.aspx?RaceDate=2026/09/23&Racecourse=HV&RaceNo={race_no}"
+        
+        on_drop_txt = f"{r['overnight_drop']:+.1f}%" if r["overnight_drop"] != 0 else "平走"
+        if r["overnight_drop"] >= 20.0: on_drop_txt += " 🌙建倉"
+        
+        # 尋找該駒最熱門的 Q 配搭
+        h_pairs = df_q[(df_q["h1_no"] == r["no"]) | (df_q["h2_no"] == r["no"])].sort_values(by="c_q")
+        if len(h_pairs) > 0:
+            top_partner_row = h_pairs.iloc[0]
+            oppo_no = top_partner_row["h2_no"] if top_partner_row["h1_no"] == r["no"] else top_partner_row["h1_no"]
+            top_q_str = f"<b>{oppo_no}號</b> ({top_partner_row['c_q']}倍)"
+        else:
+            top_q_str = "-"
+        
+        h_odds += f"""<tr>
+        <td><span class="{c_cls}">{r['no']}</span></td>
+        <td><a href="{h_url}" target="_blank" class="hkjc-link"><b>{r['name']}</b></a></td>
+        <td><b>{r['draw']}檔</b></td><td>{r['wt']}磅</td><td><b>{r['j']}</b></td><td>{r['t']}</td>
+        <td><span class="badge-gray">{r['style']}</span></td>
+        <td style="color:#64748B;">{r['o_win']}</td>
+        <td style="background:#FFFBEB; font-weight:800; font-size:13px; color:{'#DC2626' if (r['no'] == fav['no']) else '#0F172A'};">{r['c_win']}</td>
+        <td style="font-weight:700; color:{on_col}; background:#F8FAFC;">{on_drop_txt}</td>
+        <td style="font-weight:700; color:{d_col};">{r['drop_pct_5m']:+.1f}%</td>
+        <td style="color:#64748B;">{r['o_pla']}</td>
+        <td style="background:#FFFBEB; font-weight:700;">{r['c_pla']}</td>
+        <td style="font-weight:700; color:{pla_d_col};">{pla_drop:+.1f}%</td>
+        <td style="background:#F0FDF4; font-size:11px; color:#15803D;">{top_q_str}</td>
+        <td style="font-weight:700;">${int(r['delta_s']):,}</td>
+        <td><div class="pool-bar-bg"><div class="{b_cls}" style="width:{min(100, int(r['p_share']*2.5))}%;"></div></div><b>{r['p_share']}%</b></td>
+        <td><b style="color:#2563EB;">{r['m_ratio']}x</b></td>
+        <td><span class="{r['sig_c']}">{r['sig_t']}</span></td>
+        </tr>"""
+    h_odds += "</tbody></table>"
+    st.markdown(h_odds, unsafe_allow_html=True)
+    
+    # ----------------- 連贏 (QIN) 及 位置Q (QPL) MoneyFlow 專區 -----------------
+    st.markdown('<div class="section-title">🔥 連贏 (Q) 及 位置Q (QP) MoneyFlow 操盤專區 (Q與QP金額100%獨立分開)</div>', unsafe_allow_html=True)
+    
+    q_sub_tabs = st.radio("選擇連贏/位置Q 檢視模式", [
+        "🏆 大戶 Q / QP 熱門與落飛排行榜 (Q與QP金額獨立分開)",
+        "🔢 連贏 (Q) 及 位置Q (QP) 對碰九宮格矩陣 (Matrix Grid)",
+        "🎯 單駒配搭 Q / QP 速查器 (Single Horse Pairings)"
+    ], key="q_sub_tab_key", horizontal=True)
+    
+    if "排行榜" in q_sub_tabs:
+        st.caption("💡 依據連贏 (Q) 賠率熱度排序，並將【連贏 (Q) 落飛資金】與【位置Q (QP) 落飛資金】分開獨立列出，清楚對比：")
+        h_q_list = """<table class="compact-table"><thead><tr>
+        <th>排名</th><th>Q / QP 組合</th><th>出賽馬匹配搭</th>
+        <th style="background:#FEF3C7; color:#B45309;">連贏 (Q) 臨場</th><th>Q 隔夜</th><th>Q 落飛%</th>
+        <th style="background:#FEF3C7; color:#B45309; font-weight:800;">💰 連贏 (Q) 落飛資金</th>
+        <th style="background:#EFF6FF; color:#1D4ED8;">位置Q (QP) 臨場</th><th>QP 隔夜</th><th>QP 落飛%</th>
+        <th style="background:#EFF6FF; color:#1D4ED8; font-weight:800;">💰 位置Q (QP) 落飛資金</th>
+        <th>大戶操盤訊號</th>
+        </tr></thead><tbody>"""
+        
+        q_rank = 1
+        for _, qrow in df_q.head(20).iterrows():
+            q_sig = "⚪ 平走"
+            q_cls = "badge-gray"
+            if qrow["q_drop"] >= 35.0 and "2 分鐘內" in time_phase:
+                q_sig = "🔴 啡燈Q暴跌 (極限重注)"; q_cls = "badge-brown"
+            elif qrow["q_drop"] >= 20.0 and ("2 分鐘內" in time_phase or "5 分鐘內" in time_phase):
+                q_sig = "🟢 綠燈Q急落 (大單狂掃)"; q_cls = "badge-green"
+            elif qrow["q_drop"] >= 20.0:
+                q_sig = "🌙 隔夜Q建倉"; q_cls = "badge-blue"
+            elif qrow["q_drop"] >= 10.0:
+                q_sig = "📈 Q位升溫"; q_cls = "badge-green"
+                
+            h_q_list += f"""<tr>
+            <td><b>#{q_rank}</b></td>
+            <td><b style="font-size:13px; color:#0F172A;">{qrow['pair']}</b></td>
+            <td style="text-align:left;"><b>{qrow['h1_no']}號 {qrow['h1_name']}</b> ＋ <b>{qrow['h2_no']}號 {qrow['h2_name']}</b></td>
+            <td style="background:#FFFBEB; font-weight:800; font-size:13px; color:#B45309;">{qrow['c_q']}</td>
+            <td style="color:#64748B;">{qrow['o_q']}</td>
+            <td style="font-weight:700; color:{'#15803D' if qrow['q_drop']>=15.0 else '#64748B'};">{qrow['q_drop']:+.1f}%</td>
+            <td style="background:#FEF3C7; font-weight:800; color:#B45309;">${int(qrow['q_stake']):,}</td>
+            <td style="background:#EFF6FF; font-weight:800; font-size:13px; color:#1D4ED8;">{qrow['c_qp']}</td>
+            <td style="color:#64748B;">{qrow['o_qp']}</td>
+            <td style="font-weight:700; color:{'#15803D' if qrow['qp_drop']>=15.0 else '#64748B'};">{qrow['qp_drop']:+.1f}%</td>
+            <td style="background:#EFF6FF; font-weight:800; color:#1D4ED8;">${int(qrow['qp_stake']):,}</td>
+            <td><span class="{q_cls}">{q_sig}</span></td>
+            </tr>"""
+            q_rank += 1
+        h_q_list += "</tbody></table>"
+        st.markdown(h_q_list, unsafe_allow_html=True)
+        
+    elif "九宮格矩陣" in q_sub_tabs:
+        st.caption("💡 經典香港賽馬會 MoneyFlow 12x12 對碰盤：行與列交叉格顯示【連贏 (Q) / 位置Q (QP)】賠率，琥珀色代表熱門，翠綠色代表大單落飛：")
+        
+        matrix_html = '<table class="matrix-table"><thead><tr><th style="width:30px;">馬號</th>'
+        for i in range(1, n_run + 1):
+            matrix_html += f'<th>{i}</th>'
+        matrix_html += '</tr></thead><tbody>'
+        
+        for r_i in range(1, n_run + 1):
+            matrix_html += f'<tr><th style="background:#1E293B;">{r_i}</th>'
+            for c_j in range(1, n_run + 1):
+                if r_i == c_j:
+                    matrix_html += '<td class="matrix-diag">一</td>'
+                else:
+                    low_no = min(r_i, c_j)
+                    high_no = max(r_i, c_j)
+                    pair_match = df_q[(df_q["h1_no"] == low_no) & (df_q["h2_no"] == high_no)]
+                    if len(pair_match) > 0:
+                        p_val = pair_match.iloc[0]
+                        cell_cls = "matrix-hot" if p_val["c_q"] <= 12.0 else ("matrix-drop" if p_val["q_drop"] >= 20.0 else "matrix-norm")
+                        matrix_html += f'<td class="{cell_cls}" title="{low_no}號+{high_no}號: Q {p_val["c_q"]}倍 (落飛${int(p_val["q_stake"]):,}) \vert{} QP {p_val["c_qp"]}倍 (落飛${int(p_val["qp_stake"]):,})"><div style="font-weight:800; font-size:11px;">{p_val["c_q"]}</div><div style="font-size:9px; color:#2563EB;">{p_val["c_qp"]}</div></td>'
+                    else:
+                        matrix_html += '<td class="matrix-norm">-</td>'
+            matrix_html += '</tr>'
+        matrix_html += '</tbody></table>'
+        st.markdown(matrix_html, unsafe_allow_html=True)
+        st.caption("📌 矩陣圖例：上方粗體數字為 **連贏 (Q)** 賠率，下方藍字為 **位置Q (QP)** 賠率。")
+        
+    else: # 單駒配搭速查
+        st.caption("💡 選擇一匹核心心水馬，瞬間透視其配搭全場其餘 11 匹馬的 Q 與 QP 賠率組合，Q 與 QP 資金流獨立對比：")
+        h_names = [f"{r['no']}號 {r['name']} ({r['j']})" for _, r in df.iterrows()]
+        pick_h = st.selectbox("🎯 選擇核心馬 (膽馬)", h_names, index=0, key="single_pick_key")
+        pick_no = int(pick_h.split("號")[0])
+        
+        my_pairs = df_q[(df_q["h1_no"] == pick_no) | (df_q["h2_no"] == pick_no)].sort_values(by="c_q")
+        
+        h_single = """<table class="compact-table"><thead><tr>
+        <th>配搭對象</th><th>配搭馬名</th><th>騎師</th><th>練馬師</th>
+        <th style="background:#FEF3C7; color:#B45309;">連贏 (Q) 賠率</th><th>Q 隔夜</th><th>Q 跌幅</th>
+        <th style="background:#FEF3C7; color:#B45309; font-weight:800;">💰 連贏 (Q) 資金</th>
+        <th style="background:#EFF6FF; color:#1D4ED8;">位置Q (QP) 賠率</th><th>QP 隔夜</th><th>QP 跌幅</th>
+        <th style="background:#EFF6FF; color:#1D4ED8; font-weight:800;">💰 位置Q (QP) 資金</th>
+        </tr></thead><tbody>"""
+        
+        for _, prow in
