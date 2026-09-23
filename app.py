@@ -252,7 +252,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-c_race, c_bias = st.columns()
+c_race, c_bias = st.columns(2)
 with c_race:
     race_options = [f"第 {i} 場 ({RACE_INFO[i]['name']} {RACE_INFO[i]['dist']})" for i in range(1, 10)]
     selected_race = st.selectbox("🎯 選擇場次 (全晚共9場)", race_options, index=0)
