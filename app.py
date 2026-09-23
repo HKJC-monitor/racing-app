@@ -13,7 +13,16 @@ st.set_page_config(
 )
 
 # 自定義 MoneyFlow 緊湊 CSS 樣式 (馬會對碰盤色塊、圓圈賽績、無跳動)
-st.markdown("""
+st.markdown(f"""
+        <div style="border: 1px solid #CBD5E1; border-radius: 6px; padding: 6px 10px; margin-bottom: 5px;">
+            <b>{r['no']}號 {r['name']}</b> (<b>{r['draw']}檔</b> · 跑法: <b>{r['style']}</b> · 騎練: {r['j']}/{r['t']}) · AI評分: <b style="color:#DC2626;">{r['ai_score']}分</b><br>
+            <span style="font-size:12px; color:#334155;">
+            • <b>速度與同程</b>: 前速 <b>{r['e_sp']}分</b> ｜ 末段 <b>{r['l_sp']}分</b> ｜ 同程賽績: {render_dist_circles(r['dist_stat'])}<br>
+            • <b>東方評語</b>: {r['expert_com']}<br>
+            • <b>馬會往績</b>: 近6仗 <b>{r['form_6']}</b> ｜ 體重 <b>{r['bw']}</b> ｜ 盤口: 隔夜 {r['o_win']} ➔ 臨場 <b>{r['c_win']}</b> ({r['sig']})
+            </span>
+        </div>
+        """, unsafe_allow_html=True)
 <style>
 .compact-table {
     width: 100%;
