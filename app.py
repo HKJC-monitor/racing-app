@@ -13,16 +13,7 @@ st.set_page_config(
 )
 
 # 自定義 MoneyFlow 緊湊 CSS 樣式 (馬會對碰盤色塊、圓圈賽績、無跳動)
-st.markdown(f"""
-        <div style="border: 1px solid #CBD5E1; border-radius: 6px; padding: 6px 10px; margin-bottom: 5px;">
-            <b>{r['no']}號 {r['name']}</b> (<b>{r['draw']}檔</b> · 跑法: <b>{r['style']}</b> · 騎練: {r['j']}/{r['t']}) · AI評分: <b style="color:#DC2626;">{r['ai_score']}分</b><br>
-            <span style="font-size:12px; color:#334155;">
-            • <b>速度與同程</b>: 前速 <b>{r['e_sp']}分</b> ｜ 末段 <b>{r['l_sp']}分</b> ｜ 同程賽績: {render_dist_circles(r['dist_stat'])}<br>
-            • <b>東方評語</b>: {r['expert_com']}<br>
-            • <b>馬會往績</b>: 近6仗 <b>{r['form_6']}</b> ｜ 體重 <b>{r['bw']}</b> ｜ 盤口: 隔夜 {r['o_win']} ➔ 臨場 <b>{r['c_win']}</b> ({r['sig']})
-            </span>
-        </div>
-        """, unsafe_allow_html=True)
+st.markdown("""
 <style>
 .compact-table {
     width: 100%;
@@ -204,7 +195,7 @@ def get_race_data(target_race):
         if len(parts) >= 17 and int(parts[0]) == target_race:
             dist_parts = [int(x) for x in parts[13].split("-")]
             runners.append({
-                "no": int(parts),
+                "no": int(parts[1]),
                 "name": parts[2],
                 "draw": int(parts[3]),
                 "wt": int(parts[4]),
@@ -236,7 +227,7 @@ if "last_refresh_time" not in st.session_state:
 # 頂部控制欄
 c1, c2, c3, c4 = st.columns([1.5, 1.2, 1.1, 1.0])
 with c1:
-    race_opts = [f"第 {i} 場 ({RACES[i][0]} {RACES[i]})" for i in range(1, 10)]
+    race_opts = [f"第 {i} 場 ({RACES[i][0]} {RACES[i][1]})" for i in range(1, 10)]
     sel_race = st.selectbox("🎯 選擇場次", race_opts, index=3)
     race_no = race_opts.index(sel_race) + 1
 with c2:
@@ -695,14 +686,4 @@ else:
             </span>
         </div>
         """, unsafe_allow_html=True)
-'''
 
-with open('/working_dir/c_742683cfa197843a/app.py', 'w') as f:
-    f.write(code)
-
-import py_compile
-py_compile.compile('/working_dir/c_742683cfa197843a/app.py', doraise=True)
-print("SUCCESS: make_pure_app compiled cleanly with zero syntax errors!")
-EOF
-python3 /working_dir/c_742683cfa197843a/make_pure_app.py
-}
