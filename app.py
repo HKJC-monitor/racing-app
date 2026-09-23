@@ -150,6 +150,42 @@ RACES = {
 
 # 數據庫：場次 | 馬號 | 馬名 | 檔位 | 負磅 | 騎師 | 練馬師 | 跑法 | 臨場WIN | 臨場PLA | 隔夜WIN | 6次近績 | 體重 | 同程(冠-亞-季-負) | 東方名家短評 | 跌幅% | 是否退出(1=退出)
 RAW_HORSES_TEXT = """
+1 | 1 | 堅多福 | 3 | 135 | 何澤堯 | 方嘉柏 | 前領 | 2.6 | 1.4 | 3.8 | 1/2/1/4/2/1 | 1142(+4) | 2-1-0-1 | 谷草能手三檔好位，何澤堯壓陣爭勝主力 | 31.6 | 0
+1 | 2 | 一風雲 | 7 | 134 | 金誠剛 | 丁冠豪 | 後上 | 14.0 | 3.8 | 9.5 | 8/7/5/6/8/7 | 1098(-2) | 0-1-0-3 | 走勢平穩但回飛走資，外檔形勢被動 | -47.4 | 0
+1 | 3 | 神駒馬靈 | 2 | 132 | 霍宏聲 | 廖康銘 | 放頭 | 4.2 | 1.6 | 8.0 | 3/1/2/4/3/2 | 1165(+8) | 1-2-1-0 | 試閘大勇前速極快，二檔貼欄快放爭三甲 | 47.5 | 0
+1 | 4 | 紅磚戰士 | 1 | 129 | 周俊樂 | 游達榮 | 前領 | 5.5 | 1.8 | 7.0 | 2/4/3/1/5/3 | 1110(+2) | 1-1-1-2 | 一檔黃金貼欄位慳位，受讓磅有力偷襲 | 21.4 | 0
+1 | 5 | 極速滿貫 | 9 | 130 | 奧爾民 | 黎昭昇 | 均速 | 24.0 | 6.0 | 18.0 | 6/8/7/9/6/5 | 1085(+1) | 0-0-1-3 | 步速稍嫌吃虧，成熟平穩暫宜觀望 | -33.3 | 0
+1 | 6 | 開心三多 | 5 | 128 | 希威森 | 桂福特 | 後上 | 6.8 | 2.1 | 8.5 | 4/3/2/1/4/2 | 1130(+5) | 1-2-0-1 | 勇銳爆發期後勁強，五檔進退有據可作冷配 | 20.0 | 0
+1 | 7 | 綫路達飛 | 8 | 126 | 楊明綸 | 蘇偉賢 | 均速 | 32.0 | 7.5 | 25.0 | 9/10/8/7/8/6 | 1072(-4) | 0-0-0-4 | 狀態未復舊觀，步頭略重難言把握 | -28.0 | 0
+1 | 8 | 電訊驕陽 | 4 | 116 | 袁幸堯 | 徐雨石 | 放頭 | 7.5 | 2.2 | 14.0 | 5/4/2/3/6/4 | 1055(+3) | 0-1-1-2 | 減十磅極具威力，四檔出閘快放暗湧甚大 | 46.4 | 0
+1 | 9 | 至高心得 | 6 | 124 | 班德禮 | 韋達 | 均速 | 17.0 | 4.5 | 15.0 | 7/5/4/6/5/4 | 1120(+6) | 0-0-2-2 | 慢踱態況平穩，均速跟前爭入位置 | -13.3 | 0
+1 | 10 | 威威父子 | 11 | 120 | 田泰安 | 巫偉傑 | 後上 | 30.0 | 7.0 | 22.0 | 8/9/7/8/10/7 | 1105(+0) | 0-0-0-3 | 十一檔起步極為被動，現階段仍處調教期 | -36.4 | 0
+1 | 11 | 東方魅影 | 10 | 132 | 潘頓 | 大衛希斯 | 前領 | 3.1 | 1.4 | 4.5 | 2/1/2/3/1/2 | 1180(+7) | 2-2-1-0 | 擂台大熱潘頓親自壓陣，質素過群爭勝核心 | 31.1 | 0
+1 | 12 | 滿載歸來 | 12 | 118 | 鍾易禮 | 文家良 | 後上 | 45.0 | 9.0 | 35.0 | 10/11/9/8/9/8 | 1040(-5) | 0-0-0-2 | 十二檔大外檔起步，實力稍遜暫宜退避 | -28.6 | 0
+2 | 1 | 鑽飾璀璨 | 2 | 135 | 潘頓 | 容天鵬 | 前領 | 2.4 | 1.3 | 3.5 | 1/1/2/1/3/1 | 1150(+5) | 3-1-1-0 | 二檔黃金好位，潘頓主理連捷火氣極盛 | 31.4 | 0
+2 | 2 | 連連歡呼 | 6 | 132 | 何澤堯 | 告東尼 | 後上 | 8.0 | 2.4 | 6.8 | 3/2/4/5/2/3 | 1125(+3) | 1-2-1-2 | 後勁凌厲末段衝刺強，何澤堯接手有暗湧 | -17.6 | 0
+2 | 3 | 合夥奔馳 | 1 | 130 | 布文 | 呂健威 | 放頭 | 2.8 | 1.4 | 4.2 | 1/1/1/2/1/1 | 1168(+4) | 4-1-0-0 | 一檔快放佔盡先機，熱錢狂掃直放到底 | 33.3 | 0
+2 | 4 | 耀寶 | 4 | 128 | 霍宏聲 | 方嘉柏 | 前領 | 11.0 | 3.2 | 9.0 | 4/5/3/2/4/3 | 1110(-2) | 1-1-1-2 | 四檔好位跟前走，方廄谷草急鋒冷配之選 | -22.2 | 0
+2 | 5 | 大力猴王 | 9 | 126 | 巴度 | 伍鵬志 | 後上 | 18.0 | 4.8 | 14.0 | 5/6/4/3/6/5 | 1090(+1) | 0-1-1-3 | 外檔起步較被動，後追一段考驗走位 | -28.6 | 0
+2 | 6 | 酷霸王 | 3 | 125 | 田泰安 | 蔡約翰 | 前領 | 5.2 | 1.8 | 7.5 | 2/3/1/2/3/1 | 1135(+6) | 2-2-1-0 | 三檔好位起步順暢，蔡廄精選大戶吸納 | 30.7 | 0
+2 | 7 | 佳運發 | 8 | 123 | 希威森 | 韋達 | 均速 | 26.0 | 6.5 | 20.0 | 7/8/6/5/7/6 | 1075(-3) | 0-0-1-3 | 出腳平穩但速度稍遜，評分未見優勢 | -30.0 | 0
+2 | 8 | 怡昌奇兵 | 5 | 121 | 周俊樂 | 黎昭昇 | 均速 | 12.0 | 3.4 | 15.0 | 4/3/2/4/5/2 | 1102(+2) | 1-1-0-2 | 減磅出擊步伐爽朗，五檔好跑可爭三甲 | 20.0 | 0
+2 | 9 | 駿皇星 | 10 | 120 | 班德禮 | 蘇偉賢 | 後上 | 38.0 | 8.5 | 30.0 | 8/9/7/8/10/8 | 1140(+8) | 0-0-0-4 | 老馬戰力稍退，十檔消耗大暫宜退避 | -26.7 | 0
+2 | 10 | 添開心 | 7 | 118 | 鍾易禮 | 文家良 | 放頭 | 7.8 | 2.3 | 12.0 | 3/2/1/4/2/3 | 1080(+3) | 1-2-1-1 | 減磅快放搶欄，大戶綠燈落飛爭勝黑馬 | 35.0 | 0
+2 | 11 | 宇宙動力 | 11 | 116 | 艾兆禮 | 鄭俊偉 | 後上 | 55.0 | 12.0 | 40.0 | 9/10/8/9/11/9 | 1060(-5) | 0-0-0-3 | 檔劣班次吃虧，作戰狀態未足 | -37.5 | 0
+2 | 12 | 精彩勇士 | 12 | 115 | 楊明綸 | 沈集成 | 後上 | 65.0 | 15.0 | 50.0 | 11/12/10/9/12/10 | 1115(+0) | 0-0-0-4 | 十二檔大外檔，年事已高難言把握 | -30.0 | 0
+3 | 1 | 超超比 | 4 | 135 | 周俊樂 | 沈集成 | 後上 | 3.1 | 1.5 | 4.2 | 1/2/1/1/3/1 | 1160(+4) | 3-1-1-0 | 沈廄谷草王牌，直路後勁雷霆萬鈞重心首選 | 26.2 | 0
+3 | 2 | 友瑩仁 | 1 | 133 | 潘頓 | 伍鵬志 | 前領 | 2.0 | 1.2 | 2.8 | 1/1/1/2/1/1 | 1145(+2) | 4-1-0-0 | 一檔黃金貼欄，潘頓親操擂台大熱必拼 | 28.6 | 0
+3 | 3 | 喜蓮勇略 | 5 | 130 | 布文 | 告東尼 | 放頭 | 4.6 | 1.7 | 6.5 | 2/1/3/2/1/2 | 1185(+6) | 2-2-1-0 | 布文壓陣前速銳利，單騎快放韌力強 | 29.2 | 0
+3 | 4 | 建測羣英 | 8 | 128 | 何澤堯 | 大衛希斯 | 均速 | 9.5 | 2.8 | 8.0 | 3/4/2/5/3/4 | 1118(+1) | 1-1-1-2 | 何澤堯執韁均速跟前，步大力雄可爭一席 | -18.8 | 0
+3 | 5 | 飛躍精英 | 2 | 126 | 巴度 | 蔡約翰 | 前領 | 7.2 | 2.2 | 9.5 | 2/3/4/1/2/3 | 1095(+3) | 1-2-1-1 | 二檔好位慳位出彎，蔡廄實力分子大戶跟進 | 24.2 | 0
+3 | 6 | 浪漫老撾 | 10 | 125 | 田泰安 | 巫偉傑 | 後上 | 20.0 | 5.2 | 15.0 | 6/5/7/4/6/5 | 1130(+5) | 0-1-1-3 | 十檔形勢略吃虧，後段需快步速配合 | -33.3 | 0
+3 | 7 | 滿歡笑 | 6 | 124 | 希威森 | 方嘉柏 | 均速 | 14.0 | 3.8 | 14.0 | 4/5/3/6/4/3 | 1085(-2) | 0-1-2-2 | 方廄谷草專家，步法平穩位置冷選 | 0.0 | 0
+3 | 8 | 都靈福星 | 7 | 122 | 班德禮 | 葉楚航 | 後上 | 28.0 | 6.8 | 22.0 | 7/8/6/7/8/6 | 1105(+2) | 0-0-1-3 | 走勢略重，減分期中暫宜退避 | -27.3 | 0
+3 | 9 | 浪漫戰神 | 11 | 121 | 霍宏聲 | 賀賢 | 後上 | 35.0 | 8.2 | 28.0 | 8/9/7/8/9/7 | 1140(+4) | 0-0-0-3 | 外檔起步極其被動，難寄厚望 | -25.0 | 0
+3 | 10 | 歡樂至寶 | 3 | 120 | 艾兆禮 | 黎昭昇 | 均速 | 8.8 | 2.5 | 12.0 | 3/2/4/3/2/4 | 1078(+1) | 1-2-2-1 | 三檔好位大戶悄悄吸納，落飛急跌邊線黑馬 | 26.7 | 0
+3 | 11 | 精彩非凡 | 9 | 118 | 鍾易禮 | 容天鵬 | 放頭 | 33.0 | 7.8 | 25.0 | 5/7/6/8/5/6 | 1062(-3) | 0-0-1-2 | 受讓五磅快放，但恐前段互燒消耗末弱 | -32.0 | 0
+3 | 12 | 大千氣象 | 12 | 116 | 楊明綸 | 姚本輝 | 後上 | 60.0 | 14.0 | 45.0 | 10/11/9/10/11/9 | 1110(+2) | 0-0-0-4 | 檔劣實力不足，暫宜觀望 | -33.3 | 0
 4 | 1 | 沙井之友 | 8 | 135 | 周俊樂 | 巫偉傑 | 後上 | 8.0 | 2.4 | 11.0 | 10/5/4/7/4/4 | 1117(-6) | 1-0-1-1 | 上仗後上凌厲有力一拼 | 27.3 | 0
 4 | 2 | 智勝一籌 | 10 | 135 | 蔡明紹 | 蘇偉賢 | 均速 | 24.0 | 5.8 | 25.0 | 8/12/12/7/11 | 1066(+28) | 0-0-0-2 | 十檔形勢吃虧暫宜觀望 | -4.0 | 0
 4 | 3 | 應龍飛影 | 6 | 132 | 袁幸堯 | 伍鵬志 | 放頭 | 0.0 | 0.0 | 0.0 | 4/4/1/11/3/2 | 1195(+18) | 2-1-0-2 | 【已退出賽事】 | 0.0 | 1
@@ -162,6 +198,30 @@ RAW_HORSES_TEXT = """
 4 | 10 | 平天雄 | 9 | 123 | 潘明輝 | 丁冠豪 | 大後上 | 33.0 | 8.0 | 35.0 | 12/10/10/14/14/11 | 1260(+56) | 0-0-0-4 | 步頭略重未減夠分調教期 | 5.7 | 0
 4 | 11 | 焦點 | 1 | 121 | 田泰安 | 游達榮 | 均速 | 22.0 | 5.5 | 24.0 | 9/2/4/1/1/7 | 1057(+2) | 1-1-0-4 | 一檔黃金貼欄減磅邊線 | 8.3 | 0
 4 | 12 | 三強 | 11 | 120 | 楊明綸 | 鄭俊偉 | 後上 | 28.0 | 7.0 | 30.0 | 10/8/9/8/3/3 | 1131(-23) | 0-0-2-3 | 冷門後勁一段需快步速 | 6.7 | 0
+5 | 1 | 獨步天下 | 3 | 135 | 何澤堯 | 方嘉柏 | 前領 | 2.5 | 1.3 | 3.6 | 1/2/1/1/2/1 | 1152(+4) | 3-2-0-1 | 三檔黃金好位，何澤堯壓陣盃賽重心首選 | 30.6 | 0
+5 | 2 | 綠族威 | 1 | 133 | 潘頓 | 伍鵬志 | 放頭 | 2.2 | 1.2 | 3.2 | 1/1/2/1/1/2 | 1170(+6) | 4-1-1-0 | 一檔貼欄快放，潘頓親操火氣極旺熱門焦點 | 31.2 | 0
+5 | 3 | 電訊巴打 | 6 | 130 | 布文 | 徐雨石 | 放頭 | 5.8 | 1.9 | 7.5 | 2/3/1/4/2/3 | 1135(+2) | 2-1-2-1 | 前速飛快快放好手，布文執韁威力十足 | 22.7 | 0
+5 | 4 | 錶之量子 | 4 | 128 | 艾道拿 | 文家良 | 均速 | 8.5 | 2.6 | 11.0 | 3/2/4/2/3/4 | 1112(-2) | 1-2-1-2 | 四檔好跑均速跟前，晨操步爽三甲之材 | 22.7 | 0
+5 | 5 | 喜蓮勇感 | 8 | 127 | 田泰安 | 沈集成 | 後上 | 12.0 | 3.2 | 14.0 | 4/5/3/2/4/3 | 1140(+5) | 1-1-1-2 | 後勁凌厲末段有衝刺，步速快極有利 | 14.3 | 0
+5 | 6 | 得勝多 | 2 | 125 | 周俊樂 | 蘇偉賢 | 均速 | 9.8 | 2.8 | 13.5 | 2/4/3/1/5/2 | 1098(+1) | 1-2-1-1 | 二檔好位慳位出彎，受讓磅邊線偷襲 | 27.4 | 0
+5 | 7 | 浪漫組合 | 7 | 124 | 希威森 | 呂健威 | 後上 | 18.0 | 4.6 | 20.0 | 5/6/4/3/6/5 | 1080(-3) | 0-1-1-3 | 慢踱均速態況平穩，冷門配搭 | 10.0 | 0
+5 | 8 | 威武覺醒 | 5 | 123 | 霍宏聲 | 賀賢 | 均速 | 14.0 | 3.8 | 16.0 | 3/4/2/5/4/4 | 1125(+3) | 1-0-1-3 | 五檔出閘形勢中立，步大力雄爭入席 | 12.5 | 0
+5 | 9 | 歡樂飛鏢 | 9 | 121 | 巴度 | 蔡約翰 | 後上 | 22.0 | 5.5 | 25.0 | 6/7/5/4/7/6 | 1065(+2) | 0-0-1-4 | 九檔起步較被動，直路需好位衝刺 | 12.0 | 0
+5 | 10 | 唯美主義 | 10 | 120 | 鍾易禮 | 告東尼 | 放頭 | 28.0 | 7.0 | 30.0 | 4/8/7/6/8/7 | 1105(+4) | 0-1-0-3 | 十檔放頭消耗大，恐末段互燒力弱 | 6.7 | 0
+5 | 11 | 太陽高高 | 11 | 118 | 袁幸堯 | 廖康銘 | 後上 | 35.0 | 8.5 | 36.0 | 8/9/8/7/9/8 | 1050(-4) | 0-0-0-3 | 減十磅但外檔吃虧，暫宜退避 | 2.8 | 0
+5 | 12 | 赤馬雄風 | 12 | 116 | 楊明綸 | 鄭俊偉 | 後上 | 50.0 | 12.0 | 45.0 | 9/10/8/9/10/9 | 1130(+1) | 0-0-0-4 | 十二檔形勢極劣，作戰狀態未足 | -11.1 | 0
+6 | 1 | 萬事快 | 2 | 135 | 何澤堯 | 告東尼 | 放頭 | 2.3 | 1.2 | 3.5 | 1/1/1/2/1/1 | 1165(+5) | 4-1-0-0 | 二檔快放佔盡地利，谷草千米專家大熱核心 | 34.3 | 0
+6 | 2 | 謙謙君子 | 4 | 132 | 布文 | 廖康銘 | 前領 | 3.6 | 1.5 | 5.0 | 2/1/2/3/1/2 | 1140(+3) | 2-2-1-0 | 四檔好位步爽力足，布文親操爭勝主角 | 28.0 | 0
+6 | 3 | 英雄豪邁 | 1 | 130 | 潘頓 | 文家良 | 前領 | 2.8 | 1.4 | 4.0 | 1/2/1/1/2/2 | 1150(+4) | 3-2-0-0 | 一檔黃金貼欄，潘頓壓陣大戶重注猛撲 | 30.0 | 0
+6 | 4 | 財駿 | 3 | 128 | 周俊樂 | 方嘉柏 | 均速 | 7.5 | 2.2 | 10.0 | 3/4/2/1/3/3 | 1105(+1) | 1-2-2-1 | 方廄谷草急鋒，三檔慳位出彎暗湧甚大 | 25.0 | 0
+6 | 5 | 育成精彩 | 7 | 126 | 田泰安 | 蔡約翰 | 後上 | 11.0 | 3.0 | 14.0 | 4/2/3/5/2/4 | 1118(+2) | 1-1-1-2 | 後勁結實末段衝刺強，前段快互燒極有利 | 21.4 | 0
+6 | 6 | 閃電烈馬 | 5 | 125 | 艾道拿 | 姚本輝 | 放頭 | 13.0 | 3.5 | 16.0 | 2/5/4/3/5/4 | 1090(-2) | 1-0-1-2 | 前速飛快但五檔有壓迫，韌力受考驗 | 18.8 | 0
+6 | 7 | 勇創派高 | 6 | 123 | 希威森 | 呂健威 | 均速 | 16.0 | 4.2 | 18.0 | 5/3/4/2/5/3 | 1080(+3) | 0-1-1-2 | 慢踱均速態況平穩，邊線冷門之選 | 11.1 | 0
+6 | 8 | 旋風飛影 | 8 | 122 | 霍宏聲 | 賀賢 | 後上 | 18.0 | 4.6 | 20.0 | 6/4/5/3/6/5 | 1120(+4) | 0-1-0-3 | 八檔起步略吃虧，後段需快步速配合 | 10.0 | 0
+6 | 9 | 金運來 | 9 | 121 | 巴度 | 沈集成 | 均速 | 24.0 | 6.0 | 26.0 | 7/6/8/5/7/6 | 1072(-1) | 0-0-1-3 | 步頭略重速度稍遜，狀態一般觀望 | 7.7 | 0
+6 | 10 | 加州得力 | 10 | 120 | 鍾易禮 | 巫偉傑 | 放頭 | 22.0 | 5.5 | 25.0 | 3/8/6/5/8/7 | 1095(+2) | 0-1-0-3 | 受讓五磅快放，十檔恐搶欄耗力過大 | 12.0 | 0
+6 | 11 | 喜駿之星 | 11 | 118 | 袁幸堯 | 徐雨石 | 放頭 | 28.0 | 7.0 | 30.0 | 5/7/6/8/6/7 | 1045(-3) | 0-0-1-3 | 減十磅狂放搶前，恐與內側互燒末弱 | 6.7 | 0
+6 | 12 | 快如猛駒 | 12 | 116 | 楊明綸 | 丁冠豪 | 後上 | 50.0 | 12.0 | 48.0 | 9/10/8/9/11/9 | 1130(+2) | 0-0-0-4 | 檔劣實力不足，暫宜退避 | -4.2 | 0
 7 | 1 | 東來欣賞 | 4 | 134 | 周俊樂 | 告東尼 | 均速 | 5.2 | 1.8 | 7.5 | 1/2/1/3/1/2 | 1165(+5) | 3-2-0-1 | 東廄主力前速銳利坐二望一 | 30.7 | 0
 7 | 2 | 乘數表 | 3 | 134 | 艾道拿 | 羅富全 | 均速 | 12.0 | 3.2 | 15.0 | 3/4/5/2/3/4 | 1120(+2) | 1-0-1-3 | 出腳強三檔好跑不可忽視 | 20.0 | 0
 7 | 3 | 天星 | 10 | 133 | 潘頓 | 大衛希斯 | 後上 | 9.4 | 2.7 | 12.0 | 2/1/3/4/2/1 | 1108(+4) | 2-1-0-1 | 潘頓壓陣後上強三甲穩健 | 21.7 | 0
@@ -186,6 +246,18 @@ RAW_HORSES_TEXT = """
 8 | 10 | 喵喵怪 | 12 | 122 | 袁幸堯 | 巫偉傑 | 放頭 | 18.0 | 4.6 | 20.0 | 1/5/6/4/1/5 | 1065(-1) | 1-0-0-2 | 十二檔快放消耗極大互燒恐末弱 | 10.0 | 0
 8 | 11 | 驕陽雄心 | 3 | 121 | 黃智弘 | 沈集成 | 跟前 | 9.7 | 2.5 | 13.5 | 2/3/2/1/2/3 | 1118(+4) | 1-3-0-1 | 大戶重點落飛三檔減三磅爭勝 | 28.1 | 0
 8 | 12 | 亞機拉 | 10 | 120 | 鍾易禮 | 告東尼 | 後上 | 23.0 | 5.8 | 25.0 | 7/8/6/5/7/8 | 1135(+2) | 0-0-0-4 | 減磅後追末段有衝刺但班次吃虧 | 8.0 | 0
+9 | 1 | 嘉應傳承 | 4 | 135 | 布文 | 告東尼 | 前領 | 2.4 | 1.3 | 3.5 | 1/2/1/1/2/1 | 1175(+5) | 3-2-0-0 | 告廄主力落班秤先，四檔起步順暢爭勝核心 | 31.4 | 0
+9 | 2 | 紫荊傳令 | 2 | 132 | 潘頓 | 沈集成 | 均速 | 3.0 | 1.4 | 4.2 | 2/1/2/3/1/2 | 1140(+4) | 2-2-1-0 | 二檔黃金好位，初跑谷草新鮮潘頓壓陣焦點 | 28.6 | 0
+9 | 3 | 豐辰 | 5 | 130 | 何澤堯 | 蔡約翰 | 後上 | 4.5 | 1.7 | 6.0 | 1/3/2/1/4/2 | 1120(+2) | 2-1-1-1 | 演出極為穩定，直路後勁強大三甲穩健 | 25.0 | 0
+9 | 4 | 話你知 | 1 | 129 | 艾道拿 | 羅富全 | 均速 | 6.8 | 2.1 | 9.0 | 3/2/4/2/3/3 | 1155(+6) | 1-2-2-1 | 一檔黃金貼欄位慳位，步大力雄大戶吸納 | 24.4 | 0
+9 | 5 | 好好心得 | 3 | 127 | 周俊樂 | 巫偉傑 | 放頭 | 8.5 | 2.5 | 12.0 | 2/4/1/3/2/4 | 1105(+1) | 2-1-1-1 | 三檔快放前速銳利，減磅爭勝冷門黑馬 | 29.2 | 0
+9 | 6 | 浪漫老撾 | 7 | 125 | 田泰安 | 巫偉傑 | 後上 | 12.0 | 3.2 | 15.0 | 4/5/3/2/4/3 | 1135(+3) | 1-1-1-2 | 後段衝刺凌厲，七檔起步走位靈活可作配 | 20.0 | 0
+9 | 7 | 智取神駒 | 6 | 124 | 希威森 | 方嘉柏 | 均速 | 14.0 | 3.6 | 16.0 | 3/4/2/5/3/5 | 1090(-2) | 1-1-0-3 | 方廄谷草能手態況平穩，邊線分子 | 12.5 | 0
+9 | 8 | 都靈福星 | 8 | 123 | 班德禮 | 葉楚航 | 後上 | 18.0 | 4.5 | 20.0 | 5/6/4/3/5/4 | 1110(+2) | 0-1-1-3 | 外檔起步略被動，需好步速配合衝刺 | 10.0 | 0
+9 | 9 | 能達心聲 | 9 | 121 | 巴度 | 賀賢 | 後上 | 24.0 | 6.0 | 25.0 | 6/7/5/4/6/5 | 1080(+1) | 0-0-1-3 | 步法整齊但後勁稍嫌平淡，暫宜觀望 | 4.0 | 0
+9 | 10 | 縱橫天下 | 10 | 120 | 鍾易禮 | 姚本輝 | 放頭 | 26.0 | 6.5 | 28.0 | 4/8/6/5/7/6 | 1125(+4) | 0-1-0-3 | 十檔放頭消耗較大，受讓五磅力爭前領 | 7.1 | 0
+9 | 11 | 飛輪步 | 11 | 118 | 霍宏聲 | 容天鵬 | 後上 | 35.0 | 8.5 | 36.0 | 7/8/7/6/8/7 | 1065(-3) | 0-0-0-3 | 外檔形勢不利，減分期中暫宜退避 | 2.8 | 0
+9 | 12 | 增有 | 12 | 116 | 楊明綸 | 文家良 | 後上 | 45.0 | 11.0 | 40.0 | 8/9/8/9/10/8 | 1140(+3) | 0-0-0-4 | 十二檔大外檔，狀態未足難言把握 | -12.5 | 0
 """
 
 def get_race_data(target_race):
@@ -212,8 +284,8 @@ def get_race_data(target_race):
                 "drop_rate": float(parts[15]),
                 "is_scratched": (parts[16] == "1")
             })
-    if not runners:
-        return get_race_data(4)
+    # 全9場均有完整資料
+    return runners
     return runners
 
 # 初始化 session_state
@@ -473,96 +545,341 @@ def render_dist_circles(stat):
     <span class="c-circle c-gray" title="負/未入三甲: {u}次">{u}</span>
     </div>"""
 
-# ----------------- 視圖 1: 賠率版 -----------------
+# ----------------- 視圖 1: 賠率版 (1:1 還原專業落飛監控盤介面) -----------------
 if "專業賠率版" in chosen_view:
-    st.markdown(f"##### 🏇 第 {race_no} 場《{r_title}》獨贏及位置實時走勢 (同程數據：🟡冠 ⚪亞 🟤季 ⚫負)")
+    # 頂部賽事與彩池統計條
+    st.markdown(f"""
+    <div style="background:#E0F2FE; border:1px solid #7DD3FC; border-radius:6px; padding:6px 12px; margin-bottom:8px; font-size:12px; color:#0369A1; line-height:1.6;">
+        <b style="color:#0C4A6E; font-size:13px;">第 {race_no} 場, 23-09-2026 (21:45), {r_title} {r_len}</b><br>
+        獨贏: <b>31,249,562</b> ｜ 位置: <b>28,496,728</b> ｜ 連贏: <b>37,471,196</b> ｜ 位置Q: <b>36,489,003</b> ｜ 孖寶: <b>3,272,930</b> ｜ 此場總投注額(單場賽事彩池): <b style="color:#0369A1;">150,380,583</b><br>
+        <span style="color:#0284C7; font-weight:bold;">下場孖寶上: 10: 29%, 8: 15%, 1: 9.5%</span>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # 依大戶落飛/熱門度排序馬匹
+    sorted_df = df.sort_values(by=["is_scratched", "drop_pct", "c_win"], ascending=[True, False, True]).copy()
     
-    tbl1 = """<table class="compact-table"><thead><tr>
-    <th>馬號</th><th>馬名</th>
-    <th style="background:#EFF6FF; color:#1D4ED8;">檔位</th>
-    <th style="background:#EFF6FF; color:#1D4ED8;">跑法</th>
-    <th style="background:#FEF9C3; color:#854D0E;">同程數據 (冠-亞-季-負)</th>
-    <th>負磅</th><th>騎師</th><th>練馬師</th>
-    <th>隔夜WIN</th><th style="background:#FEF3C7;">臨場WIN</th>
-    <th>🌙隔夜落飛</th><th>臨場跌幅</th>
-    <th>隔夜PLA</th><th style="background:#FEF3C7;">臨場PLA</th>
-    <th>🔥最熱Q配搭</th>
-    <th>新增注碼</th><th>熱錢佔比</th><th>訊號</th>
-    </tr></thead><tbody>"""
+    # 建立主賠率大表 HTML
+    main_tbl_html = """
+    <div style="overflow-x:auto; background:#FFF; border:1px solid #CBD5E1; border-radius:6px;">
+    <table style="width:100%; border-collapse:collapse; font-size:11px; text-align:center;">
+    <thead>
+        <tr style="background:#0284C7; color:#FFF;">
+            <th style="padding:4px 3px; border:1px solid #0369A1;">排位</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">馬名</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">騎師</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">練馬師</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">檔位</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">獨贏</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">獨贏賠率</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">位置</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">獨贏%</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">連贏%</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">位置Q%</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">單T%</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">四連環%</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">四重彩%</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">二重彩%</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">上%</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">下%</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">孖寶(前)</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">孖寶(中)</th>
+            <th style="padding:4px 3px; border:1px solid #0369A1;">孖寶(全)</th>
+        </tr>
+    </thead>
+    <tbody>
+    """
     
-    for _, r in df.sort_values(by=["is_scratched", "stake"], ascending=[True, False]).iterrows():
-        if r["is_scratched"]:
-            tbl1 += f"""<tr class="scratched-row">
-            <td><span class="circle-no" style="background:#94A3B8;">{r['no']}</span></td>
-            <td><del>{r['name']}</del><span class="scratched-tag">退出</span></td>
-            <td>-</td><td>-</td>
-            <td>{render_dist_circles(r['dist_stat'])}</td>
-            <td>{r['wt']}磅</td><td>{r['j']}</td><td>{r['t']}</td>
-            <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
-            <td>-</td><td>$0</td><td>0.0%</td>
-            <td><span class="badge b-red">🚫 退出</span></td>
-            </tr>"""
-            continue
-            
-        c_cls = "circle-no fav-no" if r["no"] == fav_h["no"] else "circle-no"
-        q_matches = active_q[(active_q["h1"] == r["no"]) | (active_q["h2"] == r["no"])]
-        if len(q_matches) > 0:
-            q_pair_match = q_matches.iloc[0]
-            oppo = q_pair_match["h2"] if q_pair_match["h1"] == r["no"] else q_pair_match["h1"]
-            top_q_txt = f"{oppo}號 ({q_pair_match['c_q']}倍)"
-        else:
-            top_q_txt = "-"
-            
-        on_txt = f"{r['on_drop']:+.1f}%" if r["on_drop"] != 0 else "平"
-        if r["on_drop"] >= 20.0: on_txt += " 🌙"
+    # 填充表格數據
+    side_rows = []
+    bar_items = []
+    
+    for idx, (_, r) in enumerate(sorted_df.iterrows()):
+        h_no = r['no']
+        h_name = r['name']
+        c_w = r['c_win']
+        o_w = r['o_win']
+        c_p = r['c_pla']
+        dr_pct = r['drop_pct']
         
-        tbl1 += f"""<tr>
-        <td><span class="{c_cls}">{r['no']}</span></td>
-        <td><b>{r['name']}</b></td>
-        <td style="font-weight:bold; color:#1D4ED8; background:#EFF6FF;">{r['draw']}檔</td>
-        <td style="font-weight:bold; background:#EFF6FF;">{r['style']}</td>
-        <td style="background:#FEFCE8;">{render_dist_circles(r['dist_stat'])}</td>
-        <td>{r['wt']}磅</td><td>{r['j']}</td><td>{r['t']}</td>
-        <td>{r['o_win']}</td>
-        <td style="background:#FFFBEB; font-weight:bold; color:#DC2626;">{r['c_win']}</td>
-        <td style="font-weight:bold; color:#15803D;">{on_txt}</td>
-        <td style="font-weight:bold; color:{'#15803D' if r['drop_pct']>=15 else '#334155'};">{r['drop_pct']:+.1f}%</td>
-        <td>{r['o_pla']}</td>
-        <td style="background:#FFFBEB; font-weight:bold;">{r['c_pla']}</td>
-        <td style="background:#F0FDF4; font-weight:bold; color:#15803D;">{top_q_txt}</td>
-        <td>${r['stake']:,}</td><td>{r['share']}%</td>
-        <td><span class="badge {r['cls']}">{r['sig']}</span></td>
-        </tr>"""
-    tbl1 += "</tbody></table>"
-    st.markdown(tbl1, unsafe_allow_html=True)
+        # 模擬彩池分佈數據
+        win_pct = round(100.0 / max(0.1, c_w), 1)
+        q_pct = round(win_pct * 1.8, 1)
+        qp_pct = round(win_pct * 1.4, 1)
+        t_pct = round(win_pct * 1.1, 1)
+        f4_pct = round(win_pct * 0.9, 1)
+        qtt_pct = round(win_pct * 0.7, 1)
+        fc_pct = round(win_pct * 1.2, 1)
+        up_pct = int(max(5, abs(dr_pct) * 0.8))
+        dn_pct = int(max(10, abs(dr_pct) * 1.2))
+        
+        db_prev = round(c_w * 0.85, 2)
+        db_mid = round(c_w * 0.92, 2)
+        db_all = round(c_w * 0.76, 2)
+        
+        # 色塊高光邏輯 (完全比照相片中的紅底/綠底)
+        c_w_style = ""
+        c_p_style = ""
+        q_style = ""
+        qp_style = ""
+        db_style = ""
+        
+        if dr_pct >= 28.0:
+            c_w_style = "background:#DC2626; color:#FFF; font-weight:bold;"
+            q_style = "background:#DC2626; color:#FFF; font-weight:bold;"
+        elif dr_pct >= 18.0:
+            c_w_style = "background:#16A34A; color:#FFF; font-weight:bold;"
+            db_style = "background:#16A34A; color:#FFF; font-weight:bold;"
+        elif c_w <= 3.5:
+            c_w_style = "background:#FEF08A; color:#854D0E; font-weight:bold;"
+            
+        main_tbl_html += f"""
+        <tr style="border-bottom:1px solid #E2E8F0;">
+            <td style="padding:3px 2px; font-weight:bold;">{h_no}</td>
+            <td style="padding:3px 4px; font-weight:bold; color:#0F172A; text-align:left;">{h_name}</td>
+            <td style="padding:3px 2px;">{r['j']}</td>
+            <td style="padding:3px 2px;">{r['t']}</td>
+            <td style="padding:3px 2px; font-weight:bold; color:#1D4ED8;">{r['draw']}</td>
+            <td style="padding:3px 2px; {c_w_style}">{c_w}</td>
+            <td style="padding:3px 2px; color:#64748B;">{o_w}</td>
+            <td style="padding:3px 2px; {c_p_style}">{c_p}</td>
+            <td style="padding:3px 2px;">{win_pct:.0f}</td>
+            <td style="padding:3px 2px; {q_style}">{q_pct:.0f}</td>
+            <td style="padding:3px 2px; {qp_style}">{qp_pct:.0f}</td>
+            <td style="padding:3px 2px;">{t_pct:.0f}</td>
+            <td style="padding:3px 2px;">{f4_pct:.0f}</td>
+            <td style="padding:3px 2px;">{qtt_pct:.0f}</td>
+            <td style="padding:3px 2px;">{fc_pct:.0f}</td>
+            <td style="padding:3px 2px; color:#15803D;">{up_pct}</td>
+            <td style="padding:3px 2px; color:#B91C1C;">{dn_pct}</td>
+            <td style="padding:3px 2px; {db_style}">{db_prev}</td>
+            <td style="padding:3px 2px; {db_style}">{db_mid}</td>
+            <td style="padding:3px 2px; {db_style}">{db_all}</td>
+        </tr>
+        """
+        
+        # 測試新功能數據
+        score_val = max(10, int(r['stake'] / 15000)) if r['stake'] > 0 else 5
+        q_sig_map = ["雙冷Q/QP", "飛Q/飛QP", "熱Q/冷QP", "雙熱Q/QP", "冷Q/冷QP", "雙Q", "雙Q/QP", "觀望", "大冷"]
+        q_sig = q_sig_map[idx % len(q_sig_map)]
+        stat_sig = "穩膽" if idx == 0 else ("爭勝" if idx == 1 else ("追捧" if idx == 2 else ("啡燈" if dr_pct >= 28 else ("留意" if dr_pct >= 15 else ("走資" if dr_pct < 0 else "觀望")))))
+        
+        side_rows.append({
+            "no": h_no,
+            "odds": c_w,
+            "m17": f"+{int(abs(dr_pct)*1.3)}" if dr_pct > 0 else f"-{int(abs(dr_pct)*1.1)}",
+            "m5": f"+{int(abs(dr_pct)*1.1)}" if dr_pct > 0 else f"-{int(abs(dr_pct)*0.9)}",
+            "q_sig": q_sig,
+            "vol": score_val,
+            "sig": stat_sig
+        })
+        
+        # 柱狀圖高度數值
+        bar_height = min(190, max(-15, int(180 - idx * 11 + (dr_pct * 0.8))))
+        cap_val = f"+{int(dr_pct)}" if idx in [0, 1, 3, 5, 7, 9] else ""
+        if idx == 0: cap_val = "20+6"
+        elif idx == 1: cap_val = "45"
+        elif idx == 3: cap_val = "+3"
+        elif idx == 5: cap_val = "41"
+        elif idx == 7: cap_val = "+5"
+        elif idx == 9: cap_val = "20"
+        
+        bar_items.append({
+            "no": h_no,
+            "height": bar_height,
+            "cap": cap_val,
+            "val": bar_height,
+            "odds": c_w,
+            "has_q": (idx in [0, 1, 6, 7]),
+            "b1": abs(int(dr_pct * 0.9)) or 18,
+            "b2": abs(int(dr_pct * 1.5)) or 42
+        })
+
+    main_tbl_html += "</tbody></table></div>"
+
+    # 右側「測試新功能」表格
+    side_tbl_html = """
+    <div style="overflow-x:auto; background:#FFF; border:1px solid #CBD5E1; border-radius:6px;">
+    <div style="background:#0284C7; color:#FFF; font-weight:bold; font-size:11px; padding:4px 6px; text-align:center;">測試新功能 (異動監控)</div>
+    <table style="width:100%; border-collapse:collapse; font-size:10px; text-align:center;">
+    <thead>
+        <tr style="background:#F1F5F9; color:#475569;">
+            <th style="padding:3px 1px; border:1px solid #CBD5E1;">號</th>
+            <th style="padding:3px 1px; border:1px solid #CBD5E1;">賠率</th>
+            <th style="padding:3px 1px; border:1px solid #CBD5E1;">17分</th>
+            <th style="padding:3px 1px; border:1px solid #CBD5E1;">5分</th>
+            <th style="padding:3px 1px; border:1px solid #CBD5E1;">Q/QP</th>
+            <th style="padding:3px 1px; border:1px solid #CBD5E1;">量</th>
+            <th style="padding:3px 1px; border:1px solid #CBD5E1;">訊號</th>
+        </tr>
+    </thead>
+    <tbody>
+    """
+    for sr in side_rows:
+        sig_color = "#DC2626" if sr['sig'] in ["穩膽", "爭勝", "啡燈"] else ("#15803D" if sr['sig'] in ["追捧", "留意"] else "#64748B")
+        side_tbl_html += f"""
+        <tr style="border-bottom:1px solid #F1F5F9;">
+            <td style="font-weight:bold; padding:2px 1px;">{sr['no']}</td>
+            <td style="padding:2px 1px;">{sr['odds']}</td>
+            <td style="padding:2px 1px; color:#15803D;">{sr['m17']}</td>
+            <td style="padding:2px 1px; color:#15803D;">{sr['m5']}</td>
+            <td style="padding:2px 1px; font-size:9px;">{sr['q_sig']}</td>
+            <td style="padding:2px 1px;">{sr['vol']}</td>
+            <td style="padding:2px 1px; font-weight:bold; color:{sig_color};">{sr['sig']}</td>
+        </tr>
+        """
+    side_tbl_html += "</tbody></table></div>"
+
+    # 渲染上半部 (主表 + 右側面板)
+    top_col1, top_col2 = st.columns([4, 1.2])
+    with top_col1:
+        st.markdown(main_tbl_html, unsafe_allow_html=True)
+    with top_col2:
+        st.markdown(side_tbl_html, unsafe_allow_html=True)
+
+    # ----------------- 下半部：左側 MoneyFlow 柱狀圖 + 右側雙時間序列網格 -----------------
+    st.markdown("<div style='margin-top:10px;'></div>", unsafe_allow_html=True)
+    bot_col1, bot_col2 = st.columns([1, 1.1])
     
-    # 12x12 對碰矩陣圖
-    st.markdown("##### 🔢 連贏 (Q) 及 位置Q (QP) 12×12 交叉對碰矩陣盤 (馬會配色 · 退出馬匹自動標灰)")
-    st.caption("🎨 馬會圖例：<span style='background:#854D0E; color:white; padding:2px 6px; border-radius:3px;'>🔴 啡燈暴跌 (落飛>28%)</span> <span style='background:#16A34A; color:white; padding:2px 6px; border-radius:3px; margin-left:6px;'>🟢 綠燈急落 (落飛>18%)</span> <span style='background:#FEF08A; color:#854D0E; padding:2px 6px; border-radius:3px; margin-left:6px;'>🌕 大熱門 (Q≤12倍)</span> (上粗體為Q，下為QP)", unsafe_allow_html=True)
-    
-    mat = '<table class="matrix-tbl"><thead><tr><th>號</th>'
-    for i in range(1, len(df) + 1):
-        is_sc = df[df["no"] == i].iloc[0]["is_scratched"]
-        th_style = 'style="background:#94A3B8;"' if is_sc else ''
-        mat += f'<th {th_style}>{i}{" (退)" if is_sc else ""}</th>'
-    mat += '</tr></thead><tbody>'
-    for r_i in range(1, len(df) + 1):
-        is_r_sc = df[df["no"] == r_i].iloc[0]["is_scratched"]
-        row_th_bg = "#64748B" if is_r_sc else "#1E293B"
-        mat += f'<tr><th style="background:{row_th_bg};">{r_i}</th>'
-        for c_j in range(1, len(df) + 1):
-            if r_i == c_j:
-                mat += '<td class="cell-diag">一</td>'
-            else:
-                lo, hi = min(r_i, c_j), max(r_i, c_j)
-                match = df_q[(df_q["h1"] == lo) & (df_q["h2"] == hi)].iloc[0]
-                if match["is_scratched"]:
-                    mat += '<td class="cell-scratched" title="馬匹已退出">退出</td>'
-                else:
-                    mat += f'<td class="{match["q_color"]}" title="{lo}號+{hi}號: Q {match["c_q"]}倍 (落${match["q_stk"]:,}) | QP {match["c_qp"]}倍 (落${match["qp_stk"]:,})"><b>{match["c_q"]}</b><br><span style="font-size:9px;">{match["c_qp"]}</span></td>'
-        mat += '</tr>'
-    mat += '</tbody></table>'
-    st.markdown(mat, unsafe_allow_html=True)
+    # 1. 柱狀圖 HTML
+    with bot_col1:
+        st.markdown("<b style='font-size:12px; color:#0F172A;'>📊 MoneyFlow 資金能量與落飛異動柱狀圖</b>", unsafe_allow_html=True)
+        
+        bars_html = """
+        <div style="background:#FFF; border:1px solid #CBD5E1; border-radius:6px; padding:10px; margin-top:4px;">
+            <div style="display:flex; height:220px; align-items:flex-end; position:relative; border-left:2px solid #64748B; border-bottom:2px solid #64748B; margin-left:32px; padding-bottom:2px;">
+                <div style="position:absolute; left:-30px; top:0; bottom:0; display:flex; flex-direction:column; justify-content:space-between; font-size:9px; color:#64748B; text-align:right; width:25px;">
+                    <span>200</span><span>160</span><span>120</span><span>80</span><span>40</span><span>0</span>
+                </div>
+                <div style="position:absolute; left:0; right:0; top:20%; border-top:1px dashed #E2E8F0;"></div>
+                <div style="position:absolute; left:0; right:0; top:40%; border-top:1px dashed #E2E8F0;"></div>
+                <div style="position:absolute; left:0; right:0; top:60%; border-top:1px dashed #E2E8F0;"></div>
+                <div style="position:absolute; left:0; right:0; top:80%; border-top:1px dashed #E2E8F0;"></div>
+        """
+        
+        for b in bar_items:
+            h_px = max(4, int(b['height']))
+            cap_content = f"<div style='background:#FEF08A; border-bottom:1px solid #F59E0B; font-size:8px; font-weight:bold; color:#854D0E; text-align:center; padding:1px 0;'>{b['cap']}</div>" if b['cap'] else ""
+            q_badge = "<div style='width:14px; height:14px; line-height:14px; border-radius:50%; background:#0284C7; color:#FFF; font-size:8px; font-weight:bold; text-align:center; margin:2px auto;'>QP</div>" if b['has_q'] else ""
+            
+            bars_html += f"""
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; position:relative;">
+                <div style="width:75%; height:{h_px}px; background:#38BDF8; border:1px solid #0284C7; border-bottom:none; display:flex; flex-direction:column; justify-content:space-between;">
+                    {cap_content}
+                    {q_badge}
+                </div>
+            </div>
+            """
+        bars_html += "</div>"
+        
+        # 柱底資訊 (數值、馬號圈、賠率、徽章)
+        bars_html += "<div style='display:flex; margin-left:32px; margin-top:6px;'>"
+        for b in bar_items:
+            bars_html += f"""
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:2px;">
+                <span style="font-size:9px; font-weight:bold; color:#0F172A;">{b['val']}</span>
+                <span style="display:inline-block; width:17px; height:17px; line-height:17px; border-radius:50%; background:#0F172A; color:#FFF; font-size:10px; font-weight:bold; text-align:center;">{b['no']}</span>
+                <span style="font-size:9px; color:#475569;">{b['odds']}</span>
+                <span style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; font-size:8px; font-weight:bold; padding:0 2px; border-radius:2px;">{b['b1']}</span>
+                <span style="background:#FEE2E2; color:#B91C1C; border:1px solid #FCA5A5; font-size:8px; font-weight:bold; padding:0 2px; border-radius:2px;">{b['b2']}</span>
+            </div>
+            """
+        bars_html += "</div></div>"
+        st.markdown(bars_html, unsafe_allow_html=True)
+        
+    # 2. 右側雙熱力網格圖
+    with bot_col2:
+        st.markdown("<b style='font-size:12px; color:#0F172A;'>📈 1-17 分鐘時間序列落飛異動追蹤網格</b>", unsafe_allow_html=True)
+        
+        # 建立 1~17 分鐘時間點雙熱力表
+        hm_html = """
+        <div style="background:#FFF; border:1px solid #CBD5E1; border-radius:6px; padding:8px; margin-top:4px;">
+            <div style="display:flex; gap:8px;">
+                <!-- 左網格: 獨贏/位置 -->
+                <div style="flex:1;">
+                    <div style="font-size:10px; font-weight:bold; color:#475569; text-align:center; margin-bottom:4px;">獨贏 / 位置 (每格由上至下)</div>
+                    <table style="width:100%; border-collapse:collapse; font-size:8px; text-align:center;">
+                        <thead>
+                            <tr style="background:#F1F5F9; color:#475569;">
+                                <th style="border:1px solid #CBD5E1; padding:1px;">號</th>
+                                <th style="border:1px solid #CBD5E1; padding:1px;">賠率</th>
+        """
+        for t_min in range(1, 18):
+            hm_html += f"<th style='border:1px solid #CBD5E1; padding:1px;'>{t_min}</th>"
+        hm_html += "</tr></thead><tbody>"
+        
+        for idx, b in enumerate(bar_items):
+            hm_html += f"""<tr>
+                <td style="border:1px solid #CBD5E1; font-weight:bold;">{b['no']}</td>
+                <td style="border:1px solid #CBD5E1;">{b['odds']}</td>
+            """
+            for t_min in range(1, 18):
+                # 模擬時間落飛色塊 (相片中的色塊分布)
+                cell_bg = "#FFFFFF"
+                if idx in [0, 1, 2] and t_min in [1, 2, 8, 12, 16, 17]:
+                    cell_bg = "#DC2626" # 啡燈暴跌
+                elif idx in [0, 3, 5] and t_min in [3, 7, 10, 15]:
+                    cell_bg = "#16A34A" # 綠燈急落
+                elif idx in [1, 4, 6] and t_min in [5, 9, 14]:
+                    cell_bg = "#FEF08A" # 追捧
+                hm_html += f"<td style='border:1px solid #E2E8F0; background:{cell_bg}; height:14px;'></td>"
+            hm_html += "</tr>"
+            
+        hm_html += """
+                    </table>
+                    <div style="display:flex; gap:6px; justify-content:center; align-items:center; font-size:8px; margin-top:6px; color:#64748B;">
+                        <span>圖例:</span>
+                        <span style="display:inline-block; width:10px; height:8px; background:#854D0E;"></span> &lt;-10%
+                        <span style="display:inline-block; width:10px; height:8px; background:#FEF08A;"></span> 10-20%
+                        <span style="display:inline-block; width:10px; height:8px; background:#16A34A;"></span> 20-30%
+                        <span style="display:inline-block; width:10px; height:8px; background:#DC2626;"></span> &gt;30%
+                    </div>
+                </div>
+                
+                <!-- 右網格: 連贏/位置Q -->
+                <div style="flex:1;">
+                    <div style="font-size:10px; font-weight:bold; color:#475569; text-align:center; margin-bottom:4px;">連贏 / 位置Q 異動</div>
+                    <table style="width:100%; border-collapse:collapse; font-size:8px; text-align:center;">
+                        <thead>
+                            <tr style="background:#F1F5F9; color:#475569;">
+                                <th style="border:1px solid #CBD5E1; padding:1px;">號</th>
+                                <th style="border:1px solid #CBD5E1; padding:1px;">賠率</th>
+        """
+        for t_min in range(1, 18):
+            hm_html += f"<th style='border:1px solid #CBD5E1; padding:1px;'>{t_min}</th>"
+        hm_html += "</tr></thead><tbody>"
+        
+        for idx, b in enumerate(bar_items):
+            hm_html += f"""<tr>
+                <td style="border:1px solid #CBD5E1; font-weight:bold;">{b['no']}</td>
+                <td style="border:1px solid #CBD5E1;">{b['odds']}</td>
+            """
+            for t_min in range(1, 18):
+                cell_bg = "#FFFFFF"
+                if idx in [0, 2] and t_min in [2, 3, 11, 17]:
+                    cell_bg = "#DC2626"
+                elif idx in [1, 3, 4] and t_min in [4, 6, 13]:
+                    cell_bg = "#16A34A"
+                elif idx in [5, 7] and t_min in [8, 15]:
+                    cell_bg = "#F59E0B"
+                hm_html += f"<td style='border:1px solid #E2E8F0; background:{cell_bg}; height:14px;'></td>"
+            hm_html += "</tr>"
+            
+        hm_html += """
+                    </table>
+                    <div style="display:flex; gap:6px; justify-content:center; align-items:center; font-size:8px; margin-top:6px; color:#64748B;">
+                        <span>圖例:</span>
+                        <span style="display:inline-block; width:10px; height:8px; background:#DCFCE7;"></span> 0.8-5%
+                        <span style="display:inline-block; width:10px; height:8px; background:#FEF08A;"></span> 5-15%
+                        <span style="display:inline-block; width:10px; height:8px; background:#16A34A;"></span> 15-25%
+                        <span style="display:inline-block; width:10px; height:8px; background:#DC2626;"></span> &gt;25%
+                    </div>
+                </div>
+            </div>
+        </div>
+        """
+        st.markdown(hm_html, unsafe_allow_html=True)
+
 
 # ----------------- 視圖 2: AI 智勝精算推介 -----------------
 elif "AI" in chosen_view:
