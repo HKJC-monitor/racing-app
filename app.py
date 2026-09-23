@@ -170,7 +170,7 @@ if "ai_learning_bias" not in st.session_state:
 # 頂部控制欄
 c1, c2, c3 = st.columns([1.5, 1.2, 1.3])
 with c1:
-    race_opts = [f"第 {i} 場 ({RACES[i][0]} {RACES[i][1]})" for i in range(1, 10)]
+    race_opts = [f"第 {i} 場 ({RACES[i][0]} {RACES[i]})" for i in range(1, 10)]
     sel_race = st.selectbox("🎯 選擇場次", race_opts, index=3)
     race_no = race_opts.index(sel_race) + 1
 with c2:
@@ -245,7 +245,7 @@ for h in raw_runners:
 
 df = pd.DataFrame(parsed)
 
-# 連贏 (Q) 及 位置Q (QP) 獨立計算 (防斷行，單純步驟)
+# 連贏 (Q) 及 位置Q (QP) 獨立計算
 q_list = []
 n = len(df)
 for i in range(n):
@@ -270,14 +270,12 @@ for i in range(n):
         q_drop = round(((o_q - c_q) / o_q) * 100.0, 1)
         qp_drop = round(((o_qp - c_qp) / o_qp) * 100.0, 1)
         
-        # 嚴格分開 Q 和 QP 資金
         q_stk = int((q_pool * 0.825 / c_q) * 0.16)
         qp_stk = int((qp_pool * 0.825 / c_qp) * 0.14)
         
-        # 色塊判定 (對標馬會落飛配色)
-        if q_drop >= 28.0: q_color_cls = "cell-brown" # 啡燈
-        elif q_drop >= 18.0: q_color_cls = "cell-green" # 綠燈
-        elif c_q <= 12.0: q_color_cls = "cell-hot" # 大熱門
+        if q_drop >= 28.0: q_color_cls = "cell-brown"
+        elif q_drop >= 18.0: q_color_cls = "cell-green"
+        elif c_q <= 12.0: q_color_cls = "cell-hot"
         else: q_color_cls = "cell-norm"
             
         q_list.append({
@@ -293,7 +291,7 @@ df_q = pd.DataFrame(q_list).sort_values(by="c_q")
 top_q = df_q.iloc[0]
 fav_h = df.sort_values(by="c_win").iloc[0]
 
-# 統計各跑法馬匹數量 (滿足用戶要求：顯示幾多隻放頭、跟前、均速、後上)
+# 統計各跑法馬匹數量
 leads_cnt = len(df[df["style"] == "放頭"])
 paces_cnt = len(df[df["style"] == "均速"])
 folls_cnt = len(df[df["style"] == "跟前"])
@@ -327,7 +325,7 @@ with m3:
 with m4:
     st.markdown(f'<div class="stat-card"><b style="color:#1D4ED8;">HK$ {int(qp_pool):,}</b><br><span style="color:#1D4ED8; font-size:11px; font-weight:bold;">位置Q (QP) 彩池 · 熱QP: {top_q["pair"]} ({top_q["c_qp"]}倍)</span></div>', unsafe_allow_html=True)
 
-# ----------------- 視圖 1: 賠率版 (包含 12x12 對碰矩陣圖，顯示落飛顏色) -----------------
+# ----------------- 視圖 1: 賠率版 (包含 12x12 對碰矩陣圖) -----------------
 if "專業賠率版" in chosen_view:
     st.markdown(f"##### 🏇 第 {race_no} 場《{r_title}》獨贏及位置資金走勢 (含檔位、詳細跑法、同程數據)")
     
@@ -373,7 +371,7 @@ if "專業賠率版" in chosen_view:
     tbl1 += "</tbody></table>"
     st.markdown(tbl1, unsafe_allow_html=True)
     
-    # 12x12 對碰矩陣圖 (按用戶要求：好似馬會咁顯示落飛顏色)
+    # 12x12 對碰矩陣圖
     st.markdown("##### 🔢 連贏 (Q) 及 位置Q (QP) 12×12 交叉對碰矩陣盤 (馬會落飛配色)")
     st.caption("🎨 馬會圖例：<span style='background:#854D0E; color:white; padding:2px 6px; border-radius:3px;'>🔴 啡燈暴跌 (落飛>28%)</span> <span style='background:#16A34A; color:white; padding:2px 6px; border-radius:3px; margin-left:6px;'>🟢 綠燈急落 (落飛>18%)</span> <span style='background:#FEF08A; color:#854D0E; padding:2px 6px; border-radius:3px; margin-left:6px;'>🌕 大熱門 (Q≤12倍)</span> (上粗體為Q，下為QP)", unsafe_allow_html=True)
     
@@ -393,11 +391,10 @@ if "專業賠率版" in chosen_view:
     mat += '</tbody></table>'
     st.markdown(mat, unsafe_allow_html=True)
 
-# ----------------- 視圖 2: AI 智勝精算推介 (首選/次選/三選/四選 + 賽果輸入複盤) -----------------
+# ----------------- 視圖 2: AI 智勝精算推介 -----------------
 elif "AI" in chosen_view:
     st.markdown(f"##### 🤖 第 {race_no} 場《{r_title}》AI 智勝四駒順序精算推介")
     
-    # 依據綜合戰力、落飛資金、同程數據精選 4 匹馬
     top_picks = df.sort_values(by=["tot", "drop_pct"], ascending=[False, False]).head(4)
     p_labels = ["🥇 首選 (Top Pick)", "🥈 次選 (Second Pick)", "🥉 三選 (Third Pick)", "🎖️ 四選 (Fourth Pick)"]
     
@@ -417,7 +414,7 @@ elif "AI" in chosen_view:
         """, unsafe_allow_html=True)
         
     st.markdown("---")
-    # 用戶輸入真實賽果 · AI 深度反饋複盤
+    # 用戶輸入真實賽果
     st.markdown("##### 📝 輸入本場實際賽果 · AI 深度複盤與權重自適應優化")
     st.caption("💡 跑完此場後，將真實冠亞季殿名次輸入，AI 將自動對比預測偏差，並動態調校下一場的模型權重！")
     
@@ -433,7 +430,6 @@ elif "AI" in chosen_view:
         s_no = int(scd_h.split("號")[0])
         st.session_state["results_history"][race_no] = (w_no, s_no)
         
-        # 自適應權重微調邏輯
         win_info = df[df["no"] == w_no].iloc[0]
         if win_info["style"] in ["放頭", "均速"]:
             st.session_state["ai_learning_bias"]["lead_bias"] += 2.0
@@ -445,7 +441,7 @@ elif "AI" in chosen_view:
             
         st.success(f"✅ 第 {race_no} 場賽果已儲存！AI 複盤結論：{analysis_text} 模型已自動自適應優化下一場評分權重。")
 
-# ----------------- 視圖 3: 綜合能力評分總表 (含同程數據與東方評語) -----------------
+# ----------------- 視圖 3: 綜合能力評分總表 -----------------
 elif "能力評分" in chosen_view:
     st.markdown(f"##### 📊 第 {race_no} 場《{r_title}》能力評分總表 (含同程數據、東方日報名家評語)")
     tbl2 = """<table class="compact-table"><thead><tr>
@@ -495,13 +491,3 @@ else:
             </span>
         </div>
         """, unsafe_allow_html=True)
-'''
-
-with open('/working_dir/c_742683cfa197843a/app.py', 'w') as f:
-    f.write(code)
-
-py_compile.compile('/working_dir/c_742683cfa197843a/app.py', doraise=True)
-print("SUCCESS: Full app.py compiled with zero syntax errors!")
-EOF
-python3 /working_dir/c_742683cfa197843a/generate_ultimate_app.py
-}
